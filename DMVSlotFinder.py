@@ -24,6 +24,12 @@ class BookingProfile:
         self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[2]/table/tbody/tr/td[2]/div/div/div").click()
         time.sleep(3)
         self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[4]/div/div[2]/button").click()
+        time.sleep(3)
+        self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[4]/div/div[2]/button").click()
+
+    def enterText(self,xpath,text):
+        self.browser.find_element_by_xpath(xpath).click()
+        self.browser.find_element_by_xpath(xpath).send_keys(text)
 
     def earlierDateFound(self,newDate,index):
         formattedBooked = time.strptime(self.dateBooked, "%m/%d/%Y")
@@ -42,23 +48,19 @@ class BookingProfile:
         time.sleep(4)
         browser.find_element_by_xpath("/html/body/div/div[2]/div/div/div[2]/button[1]").click()
         time.sleep(4)
-        browser.find_element_by_xpath("/html/body/div[1]/div/main/div/div/section/div/main/div/section/div[2]/div/div/form/div[2]/div[3]/div[2]/div/div[1]/div/input").click()
-        browser.find_element_by_xpath("/html/body/div[1]/div/main/div/div/section/div/main/div/section/div[2]/div/div/form/div[2]/div[3]/div[2]/div/div[1]/div/input").send_keys(self.applicantFirstName)
 
+        self.enterText("/html/body/div[1]/div/main/div/div/section/div/main/div/section/div[2]/div/div/form/div[2]/div[3]/div[2]/div/div[1]/div/input",self.applicantFirstName)
         time.sleep(0.5)
 
-        browser.find_element_by_xpath("/html/body/div[1]/div/main/div/div/section/div/main/div/section/div[2]/div/div/form/div[2]/div[3]/div[3]/div/div[1]/div/input").click()
-        browser.find_element_by_xpath("/html/body/div[1]/div/main/div/div/section/div/main/div/section/div[2]/div/div/form/div[2]/div[3]/div[3]/div/div[1]/div/input").send_keys(self.applicantLastName)
-
+        self.enterText("/html/body/div[1]/div/main/div/div/section/div/main/div/section/div[2]/div/div/form/div[2]/div[3]/div[3]/div/div[1]/div/input",self.applicantLastName)
         time.sleep(0.5)
 
-        browser.find_element_by_xpath("/html/body/div[1]/div/main/div/div/section/div/main/div/section/div[2]/div/div/form/div[2]/div[3]/div[4]/div/div[1]/div/input").click()
-        browser.find_element_by_xpath("/html/body/div[1]/div/main/div/div/section/div/main/div/section/div[2]/div/div/form/div[2]/div[3]/div[4]/div/div[1]/div/input").send_keys(self.DOB)
-
+        self.enterText("/html/body/div[1]/div/main/div/div/section/div/main/div/section/div[2]/div/div/form/div[2]/div[3]/div[4]/div/div[1]/div/input",self.DOB)
         time.sleep(0.5)
 
-        browser.find_element_by_xpath("/html/body/div[1]/div/main/div/div/section/div/main/div/section/div[2]/div/div/form/div[2]/div[3]/div[5]/div/div[1]/div/input").click()
-        browser.find_element_by_xpath("/html/body/div[1]/div/main/div/div/section/div/main/div/section/div[2]/div/div/form/div[2]/div[3]/div[5]/div/div[1]/div/input").send_keys(self.lastFourSSN)
+        self.enterText("/html/body/div[1]/div/main/div/div/section/div/main/div/section/div[2]/div/div/form/div[2]/div[3]/div[5]/div/div[1]/div/input",self.lastFourSSN)
+        time.sleep(0.5)
+
 
         browser.find_element_by_xpath("/html/body/div[1]/div/main/div/div/section/div/main/div/section/div[2]/div/div/form/div[2]/div[4]/button").click()
 
@@ -95,7 +97,7 @@ class BookingProfile:
             while (earlierFoundBooked != True) and (index <= 4):
                 dateAvalible = browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[2]/div/table/tbody/tr["+str(index)+"]/td[3]").text
                 print(self.earlierDateFound(dateAvalible,index))
-            
+                index += 1
             time.sleep(random.randint(30,60))
             browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[5]/div/div[1]/button").click()
             time.sleep(5)
