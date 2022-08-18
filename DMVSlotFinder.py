@@ -17,8 +17,9 @@ class BookingProfile:
 
 
     def bookAvalible(self,index):
-        self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[2]/div/table/tbody/tr["+str(index)+"]/td[4]/i").click()
-        time.sleep(7)
+        if index != 0:
+            self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[2]/div/table/tbody/tr["+str(index)+"]/td[4]/i").click()
+            time.sleep(7)
         self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[3]/table/tbody/tr/td[2]/div/div[1]/div").click()
         time.sleep(3)
         self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[2]/table/tbody/tr/td[2]/div/div/div").click()
@@ -33,7 +34,7 @@ class BookingProfile:
 
     def earlierDateFound(self,newDate,index):
         formattedBooked = time.strptime(self.dateBooked, "%m/%d/%Y")
-
+    
         formattedNew = time.strptime(newDate, "%m/%d/%Y")
         earlierDateFoundResult = formattedBooked > formattedNew
         if earlierDateFoundResult == True:
@@ -94,12 +95,19 @@ class BookingProfile:
             time.sleep(10)
 
             index = 1
+            dateAvalible = browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[1]/div/table/tbody/tr/td[3]").text
+            print(self.earlierDateFound(dateAvalible,0))
             while (earlierFoundBooked != True) and (index <= 4):
                 dateAvalible = browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[2]/div/table/tbody/tr["+str(index)+"]/td[3]").text
                 print(self.earlierDateFound(dateAvalible,index))
                 index += 1
             time.sleep(random.randint(30,60))
-            browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[5]/div/div[1]/button").click()
+            try:
+                browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[5]/div/div[1]/button").click()
+            except:
+                print("TRIEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
+                time.sleep(4)
+                browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[5]/div/div[1]/button").click()
             time.sleep(5)
 
 
@@ -108,7 +116,7 @@ class BookingProfile:
 
 testProfile = BookingProfile("firstF","firstL","11/11/2001","1111","75034")
 testProfile.main()
-applicantFirstName = "firstF"
+applicantFirstName = "firstF"   
 applicantLastName = "firstL"
 DOB = "11/11/2001"
 lastFourSSN = "1111"
