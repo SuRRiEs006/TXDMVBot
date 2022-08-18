@@ -12,8 +12,10 @@ class BookingProfile:
         self.DOB = DOB
         self.lastFourSSN = lastFourSSN
         self.postCode = postCode
+        self.idealDate = "09/18/2022" #MM/DD/YEAR
         self.dateBooked = None
         self.browser = None
+        
 
 
     def bookAvalible(self,index):
@@ -23,24 +25,24 @@ class BookingProfile:
         self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[3]/table/tbody/tr/td[2]/div/div[1]/div").click()
         time.sleep(3)
         self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[2]/table/tbody/tr/td[2]/div/div/div").click()
-        time.sleep(3)
+        time.sleep(4)
         self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[4]/div/div[2]/button").click()
-        time.sleep(3)
+        time.sleep(6)
         self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[4]/div/div[2]/button").click()
 
     def enterText(self,xpath,text):
         self.browser.find_element_by_xpath(xpath).click()
         self.browser.find_element_by_xpath(xpath).send_keys(text)
 
-    def earlierDateFound(self,newDate,index):
+    def isEarlierDateFound(self,newDate,index):
         formattedBooked = time.strptime(self.dateBooked, "%m/%d/%Y")
-    
+        formattedEarliest = time.strptime(self.idealDate, "%m/%d/%Y")
         formattedNew = time.strptime(newDate, "%m/%d/%Y")
-        earlierDateFoundResult = formattedBooked > formattedNew
-        if earlierDateFoundResult == True:
+
+        if (formattedBooked > formattedNew) and (formattedNew >= formattedEarliest):
             print("FOUNDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
             self.bookAvalible(index)
-        return(earlierDateFoundResult)
+            return(True)
 
     def main(self):
         browser = webdriver.Chrome("chromedriver.exe")
@@ -96,19 +98,14 @@ class BookingProfile:
 
             index = 1
             dateAvalible = browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[1]/div/table/tbody/tr/td[3]").text
-            print(self.earlierDateFound(dateAvalible,0))
+            earlierFoundBooked = self.isEarlierDateFound(dateAvalible,0)
             while (earlierFoundBooked != True) and (index <= 4):
                 dateAvalible = browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[2]/div/table/tbody/tr["+str(index)+"]/td[3]").text
-                print(self.earlierDateFound(dateAvalible,index))
+                earlierFoundBooked = self.isEarlierDateFound(dateAvalible,index)
                 index += 1
             time.sleep(random.randint(30,60))
-            try:
+            if earlierFoundBooked != True :
                 browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[5]/div/div[1]/button").click()
-            except:
-                print("TRIEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
-                time.sleep(4)
-                browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[5]/div/div[1]/button").click()
-            time.sleep(5)
 
 
         print("DONE")
@@ -116,7 +113,7 @@ class BookingProfile:
 
 testProfile = BookingProfile("firstF","firstL","11/11/2001","1111","75034")
 testProfile.main()
-applicantFirstName = "firstF"   
+applicantFirstName = "firstF"
 applicantLastName = "firstL"
 DOB = "11/11/2001"
 lastFourSSN = "1111"
