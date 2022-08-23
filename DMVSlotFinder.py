@@ -6,13 +6,13 @@ import random
 
 class BookingProfile:
 
-    def __init__(self,applicantFirstName,applicantLastName,DOB,lastFourSSN,postCode):
+    def __init__(self,applicantFirstName,applicantLastName,DOB,lastFourSSN,postCode,idealDate):
         self.applicantFirstName = applicantFirstName
         self.applicantLastName = applicantLastName
         self.DOB = DOB
         self.lastFourSSN = lastFourSSN
         self.postCode = postCode
-        self.idealDate = "09/18/2022" #MM/DD/YEAR
+        self.idealDate = idealDate #MM/DD/YEAR
         self.dateBooked = None
         self.browser = None
         
@@ -21,7 +21,7 @@ class BookingProfile:
     def bookAvalible(self,index):
         if index != 0:
             self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[2]/div/table/tbody/tr["+str(index)+"]/td[4]/i").click()
-            time.sleep(7)
+            time.sleep(4)
         self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[3]/table/tbody/tr/td[2]/div/div[1]/div").click()
         time.sleep(3)
         self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[2]/table/tbody/tr/td[2]/div/div/div").click()
@@ -94,7 +94,7 @@ class BookingProfile:
         earlierFoundBooked = False
         while (earlierFoundBooked != True):
             browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/form/div/div[2]/div[2]/div/div[2]/button").click()
-            time.sleep(10)
+            time.sleep(11)
 
             index = 1
             dateAvalible = browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[1]/div/table/tbody/tr/td[3]").text
@@ -106,15 +106,9 @@ class BookingProfile:
             time.sleep(random.randint(30,60))
             if earlierFoundBooked != True :
                 browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[5]/div/div[1]/button").click()
+            else:
+                return(True)
 
-
-        print("DONE")
-        time.sleep(100)
-
-testProfile = BookingProfile("firstF","firstL","11/11/2001","1111","75034")
-testProfile.main()
-applicantFirstName = "firstF"
-applicantLastName = "firstL"
-DOB = "11/11/2001"
-lastFourSSN = "1111"
-postCode = "75034"
+# if __name__ == "__main__":
+#     #testProfile = BookingProfile("firstF","firstL","11/11/2001","1111","75034")
+#     testProfile.main()
