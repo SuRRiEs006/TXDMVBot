@@ -5,13 +5,12 @@ import threading
 outcome = False
 
 
-while True:
+while outcome != True & outcome == None:
 
     testProfile = DMVSlotFinder.BookingProfile("surna","satpalli","12/2002","11","734","08/2002")
     outcome = testProfile.main()
     print(outcome)
-    if outcome != False:
-        break
+
     
     
     

@@ -117,5 +117,5 @@ class BookingProfile:
                     return(self.noNeedToRun)
         except:
             self.browser.save_screenshot(self.applicantFirstName + str(datetime.now().strftime("     %d-%m-%Y-%H-%M-%S")) + ".png")
-            return(False)
+            return(None)
 
