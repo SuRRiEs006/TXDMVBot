@@ -17,6 +17,7 @@ class BookingProfile:
         self.idealDate = idealDate #MM/DD/YEAR
         self.dateBooked = None
         self.browser = None
+        self.newDate = None
         
 
 
@@ -31,6 +32,9 @@ class BookingProfile:
         self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[4]/div/div[2]/button").click()
         time.sleep(6)
         self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div[4]/div/div[2]/button").click()
+        time.sleep(6)
+        self.newDate = (self.browser.find_element_by_xpath("/html/body/div[1]/div[2]/main/div/div/section/div/main/div/section/div[2]/div/div/div[2]/div[2]/div[2]/div[1]/div[4]/div[2]").text).split(" ")[0]
+     
 
     def enterText(self,xpath,text):
         self.browser.find_element_by_xpath(xpath).click()
@@ -44,7 +48,7 @@ class BookingProfile:
         if (formattedBooked > formattedNew) and (formattedNew >= formattedEarliest):
             print("FOUNDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
             self.bookAvalible(index)
-            if dateBooked == self.idealDate:
+            if self.newDate == self.idealDate:
                 self.noNeedToRun = True
             else:
                 self.noNeedToRun = False

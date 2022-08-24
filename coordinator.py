@@ -3,11 +3,11 @@ import threading
 
 
 outcome = False
-retryCount = 0
+retryCount = 1
 
 while True:
 
-    testProfile = DMVSlotFinder.BookingProfile("surna","satpalli","12/2002","11","734","08/2002")
+    testProfile = DMVSlotFinder.BookingProfile("firstf","firstl","11/11/2001","1111","75035","12/09/2022")
     outcome = testProfile.main()
     print(outcome)
     if (outcome == None) & (retryCount<3):
